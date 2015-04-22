@@ -9,31 +9,31 @@ if !exists('g:jours_dir')
   let g:jours_dir = '~/jours'
 endif
 
-function g:jours_today_path()
+function g:JoursTodayPath()
   let l:today = strftime("%Y%m%d")
   return expand(g:jours_dir . '/' . l:today . '.md')
 endfunction
 
-function g:jours_last_file()
+function g:JoursLastFile()
   let l:file_pattern = g:jours_dir . '/[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9].md'
   return split(glob(l:file_pattern), '\n')[-1]
 endfunction
 
-function s:jours_carry_over()
-  let l:today = g:jours_today_path()
+function s:JoursCarryOver()
+  let l:today = g:JoursTodayPath()
   if !empty(glob(l:today))
     echo l:today . ' already exists.'
     return
   endif
 
-  execute 'edit' g:jours_last_file()
+  execute 'edit' g:JoursLastFile()
   execute 'save' l:today
 endfunction
 
-command! JoursEditToday execute 'edit' g:jours_today_path()
-command! JoursWriteToday execute 'write' g:jours_today_path()
-command! JoursSaveToday execute 'save' g:jours_today_path()
-command! JoursCarryOver call s:jours_carry_over()
+command! JoursEditToday execute 'edit' g:JoursTodayPath()
+command! JoursWriteToday execute 'write' g:JoursTodayPath()
+command! JoursSaveToday execute 'save' g:JoursTodayPath()
+command! JoursCarryOver call s:JoursCarryOver()
 command! JoursCd execute 'cd' g:jours_dir
 
 let g:jours_loaded = 1
